@@ -29,7 +29,7 @@
     "contains_non_public_inventory": true,
     "digest": "sha256:2d7cf044d2a5532b998d300cbf5d69456051fe13378f4293fce1ce40a02a646d",
     "path": "owners/scintilla-run.json",
-    "repository": "ORESoftware/project-registry"
+    "repository": "approved-private-registry"
   },
   "relationships": [
     {
