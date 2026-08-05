@@ -1,11 +1,28 @@
-schema_version: 1
+schema_version: 2
 organization: scintilla-run
 canonical_profile_repository: scintilla-run/.github
 policy:
   semantic_conflict_resolution: required
   preserve_history_during_consolidation: true
   exact_head_validation: true
+  truthful_evidence: true
   secrets_in_repository: forbidden
 integrations:
-  linear: verify_per_project
-  slack: verify_per_project
+  linear:
+    status: verified
+    project_name: github.com/scintilla-run
+    project_id: f5da817a-9c48-48ff-abcd-c6dd21045c20
+    url: https://linear.app/denman/project/githubcomscintilla-run-6d9dd5f5e244
+  github_project:
+    status: verify_or_create
+    owner: scintilla-run
+    title: scintilla-run-project
+    preferred_number: 1
+    expected_url: https://github.com/orgs/scintilla-run/projects/1
+  slack:
+    status: canonical
+    channel: '#scintilla-run'
+documentation:
+  delivery_control_plane: docs/DELIVERY_CONTROL_PLANE.md
+  repository_map: docs/REPOSITORY_MAP.md
+  branching_and_deployment: BRANCHING_AND_DEPLOYMENT.md
