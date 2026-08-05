@@ -66,14 +66,30 @@ The initial Elixir proposal was not merged. Its synchronous OTP `httpc` transpor
 
 The weaker stub-only `dev` proposal `scintilla-clients#17` was closed as superseded rather than merged.
 
+### Declared Opto Sync boundary
+
+Pull request `scintilla-clients#13` merged as `dbe1ced6740023da21f07bac81edd6ca93e91ab7` and records a metadata/control-plane Opto Sync adoption boundary at rollout phase `declared`.
+
+The manifest:
+
+- pins `opto-sync/opto-sync-clients` version `0.2.0` at immutable commit `068414c8ff7d4262d0a395959b5209d5908f0fcc`;
+- declares Dart, Gleam, Rust, and TypeScript surfaces;
+- scopes synchronization to experiment definitions, run metadata, artifact indexes, and observation checkpoints;
+- declares IndexedDB/SQLite and HTTP/WebSocket expectations;
+- requires authenticated transport, encrypted storage, tombstones, timestamp reconciliation, and keyed array merging;
+- explicitly excludes artifact binaries, runner credentials, signing keys, and live high-volume telemetry streams.
+
+The declaration does not claim durable queues, artifact transfer, runner integration, or production readiness. Linear issue `DEN-2456` records the completed declaration. Advance to `local-queue` only after restart, duplicate-delivery, stale-observation, tombstone, concurrent-annotation, and artifact-index-rebase fixtures pass.
+
 ### Active project lanes
 
 1. **Actions admission and main recertification (`DEN-1573`).** Restore reliable runner allocation and record step-level evidence for current mainline hardening and the extended matrix.
 2. **Bounded streaming Elixir client (`DEN-2446`).** Implement streaming response ceilings, native Elixir 1.18 / OTP 28 tests, and a clean Zed consumer before adding the target.
-3. **Go hardening (`DEN-1544`).** Maintain lexical path validation, safe token state, and alias/description constraints without weakening cross-runtime policy.
-4. **Native registry parity (`DEN-713`).** Keep native dry-runs aligned with the exact Zed-packed artifacts and fail when a declared route cannot be installed by a clean consumer.
-5. **Cross-runtime parity (`DEN-1089`, completed `DEN-1101`, `DEN-1116`, and `DEN-2440`).** New work must extend the canonical matrix rather than reintroduce duplicate package roots or weaker historical transports.
-6. **E2E evidence (`DEN-1569`).** Validate source redaction, isolated polyglot packages, and additive GitOps behavior outside the client repository where integration ownership belongs.
+3. **Implement the declared Opto Sync boundary.** Build durable experiment/run metadata queues and replay/concurrency fixtures as a follow-up to `DEN-2456`; keep artifact binaries, credentials, signing keys, and live telemetry outside the boundary.
+4. **Go hardening (`DEN-1544`).** Maintain lexical path validation, safe token state, and alias/description constraints without weakening cross-runtime policy.
+5. **Native registry parity (`DEN-713`).** Keep native dry-runs aligned with the exact Zed-packed artifacts and fail when a declared route cannot be installed by a clean consumer.
+6. **Cross-runtime parity (`DEN-1089`, completed `DEN-1101`, `DEN-1116`, and `DEN-2440`).** New work must extend the canonical matrix rather than reintroduce duplicate package roots or weaker historical transports.
+7. **E2E evidence (`DEN-1569`).** Validate source redaction, isolated polyglot packages, and additive GitOps behavior outside the client repository where integration ownership belongs.
 
 ### Board hygiene
 
