@@ -56,3 +56,6 @@ Planning and delivery context is tracked in [github.com/scintilla-run](https://l
 
 Repository descriptions and repository-local documentation remain authoritative for each project. Do not infer production readiness, support commitments, or security guarantees from this profile alone.
 <!-- ore-org-baseline:end -->
+
+Organization-wide contribution, security, branching, repository-boundary, and
+release guidance lives in this `.github` repository.
