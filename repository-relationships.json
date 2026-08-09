@@ -1,0 +1,106 @@
+{
+  "$schema": "./repository-relationships.schema.json",
+  "audience": "public",
+  "generated": {
+    "complete_for_visibility": "public",
+    "generated_at": "2026-08-05T21:07:32Z",
+    "generator_version": "2026-08-04.1",
+    "inventory_digest": "sha256:eb567e1477fc92df1a0c9d89bed0439e4c5e2e0230f7fd7c6b0aad7002afd138",
+    "managed_by": "ore-repository-relationship-rollout",
+    "omitted_repository_count": 11,
+    "private_repositories_omitted": true,
+    "source": "GitHub GraphQL repository inventory plus reviewed manual declarations"
+  },
+  "owner": {
+    "account_type": "organization",
+    "dotgithub_repository": "scintilla-run/.github",
+    "github_id": "306201161",
+    "linear_project": {
+      "id": "f5da817a-9c48-48ff-abcd-c6dd21045c20",
+      "name": "github.com/scintilla-run",
+      "team_id": "eb8ab169-5afe-4b6f-9cab-3f2aa3e887dc",
+      "url": "https://linear.app/denman/project/githubcomscintilla-run-6d9dd5f5e244",
+      "workspace": "denman"
+    },
+    "login": "scintilla-run",
+    "mapping_id": "context:scintilla-run"
+  },
+  "private_registry": {
+    "contains_non_public_inventory": true,
+    "digest": "sha256:2d7cf044d2a5532b998d300cbf5d69456051fe13378f4293fce1ce40a02a646d",
+    "path": "owners/scintilla-run.json",
+    "repository": "approved-private-registry"
+  },
+  "relationships": [
+    {
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "kind": "github-owner-membership",
+          "source": "GitHub GraphQL repository inventory"
+        }
+      ],
+      "from": "scintilla-run/.github",
+      "id": "sha256:94ef45ae67122ba2b12002d8c764f26e022ecefe4d8f7928c2e23b56d686ae22",
+      "notes": "Organization .github policy and community-health defaults govern this sibling repository.",
+      "required": true,
+      "scope": "organization",
+      "status": "declared",
+      "to": "scintilla-run/scintilla-run.github.io",
+      "type": "governs"
+    },
+    {
+      "confidence": 0.95,
+      "evidence": [
+        {
+          "kind": "repository-name",
+          "value": "scintilla-run.github.io"
+        }
+      ],
+      "from": "scintilla-run/scintilla-run.github.io",
+      "id": "sha256:28cf2daaec852ab9d41577338cd5b9aac13fc0aa82e87430bb066e4b9f3ebe22",
+      "notes": "The conventional *.github.io repository documents the organization profile.",
+      "required": false,
+      "scope": "organization",
+      "status": "inferred",
+      "to": "scintilla-run/.github",
+      "type": "documents"
+    }
+  ],
+  "repositories": [
+    {
+      "archived": false,
+      "default_branch": "main",
+      "fork": false,
+      "full_name": "scintilla-run/.github",
+      "github_id": "1324047970",
+      "name": ".github",
+      "owner": "scintilla-run",
+      "roles": [
+        "community-health",
+        "governance",
+        "relationship-registry"
+      ],
+      "source": "github-graphql-api",
+      "url": "https://github.com/scintilla-run/.github",
+      "visibility": "public"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "fork": false,
+      "full_name": "scintilla-run/scintilla-run.github.io",
+      "github_id": "1304025634",
+      "name": "scintilla-run.github.io",
+      "owner": "scintilla-run",
+      "roles": [
+        "documentation-site"
+      ],
+      "source": "github-graphql-api",
+      "url": "https://github.com/scintilla-run/scintilla-run.github.io",
+      "visibility": "public"
+    }
+  ],
+  "schema_version": 1,
+  "unresolved_hints": []
+}
