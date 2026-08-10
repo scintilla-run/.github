@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-08-10",
+  "organization": "scintilla-run",
+  "authority": {
+    "security_policy": ".github/SECURITY.md",
+    "security_inheritance": "organization-fallback",
+    "license_policy": "repository-explicit-or-unresolved",
+    "unresolved_license_decisions": [
+      "private repository proprietary/license policy",
+      "scintilla-run.github.io public-site license"
+    ]
+  },
+  "repositories": [
+    {"name": ".github", "role": "organization-governance", "visibility": "public", "lifecycle": "active"},
+    {"name": "gleam-lambda-runner", "role": "execution-runner", "visibility": "private", "lifecycle": "active"},
+    {"name": "scintilla-app-rs", "role": "application", "visibility": "private", "lifecycle": "active"},
+    {"name": "scintilla-backend.rs", "role": "backend-service", "visibility": "private", "lifecycle": "active"},
+    {"name": "scintilla-cli", "role": "cli", "visibility": "private", "lifecycle": "active"},
+    {"name": "scintilla-clients", "role": "client-sdks", "visibility": "private", "lifecycle": "active"},
+    {"name": "scintilla-interfaces", "role": "contracts-interfaces", "visibility": "private", "lifecycle": "active"},
+    {"name": "scintilla-mcp-server.rs", "role": "mcp-server", "visibility": "private", "lifecycle": "active"},
+    {"name": "scintilla-run-e2e", "role": "end-to-end-certification", "visibility": "private", "lifecycle": "active"},
+    {"name": "scintilla-run-infra", "role": "infrastructure-gitops", "visibility": "private", "lifecycle": "active", "monorepo_application_submodule": false},
+    {"name": "scintilla-run-monorepo", "role": "application-integration-monorepo", "visibility": "private", "lifecycle": "active"},
+    {"name": "scintilla-run.github.io", "role": "public-site", "visibility": "public", "lifecycle": "active"},
+    {"name": "scintilla-sync", "role": "replication-sync", "visibility": "private", "lifecycle": "active"},
+    {"name": "scintilla-ui.dart", "role": "ui-client", "visibility": "private", "lifecycle": "active"}
+  ]
+}
