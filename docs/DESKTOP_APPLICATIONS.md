@@ -64,7 +64,7 @@ Shared schemas, clients, route fixtures, sample jobs, lifecycle models, and conf
 
 The Flutter repository records the companion and web/native distinction in [`COMPANION_DESKTOP.md`](https://github.com/scintilla-run/scintilla-ui.dart/blob/main/COMPANION_DESKTOP.md), introduced through [PR #9](https://github.com/scintilla-run/scintilla-ui.dart/pull/9).
 
-Central toolkit assignments: [`rust-desktop-strategies.md`](https://github.com/ORESoftware/project-registry/blob/main/docs/rust-desktop-strategies.md).
+Central toolkit assignments: [`rust-desktop-strategies.md`](private-registry://canonical/registry/rust-desktop-strategies.md).
 
 ## Project routing
 
