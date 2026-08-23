@@ -1,59 +1,35 @@
-## Summary
+## Purpose and outcome
 
-Describe the problem, the chosen design, and the user or operational outcome.
-
-## Verification
-
-List commands, tests, checks, and manual validation actually performed against this exact head.
-
-## Compatibility and risk
-
-Explain API/data/configuration changes, security implications, rollout, migration, and rollback.
-
-## Conflict reconciliation
-
-When conflicts were present, summarize both sides' intent and how the final implementation preserves or deliberately supersedes each part.
-
-- [ ] No secrets or private data are included.
-- [ ] Documentation and tests reflect the final contract.
-- [ ] The exact proposed head was verified.
-
-<!-- ore-org-baseline:begin -->
-## Summary
-
-Describe the behavior and intent, not only the files changed.
+Describe the problem, intended behavior, user or operational outcome, and why this repository owns the change.
 
 ## Planning and dependencies
 
-- Linear project or issue: [github.com/scintilla-run](https://linear.app/denman/project/githubcomscintilla-run-6d9dd5f5e244)
+- Linear issue or project: https://linear.app/denman/project/githubcomscintilla-run-6d9dd5f5e244
 - Related GitHub issues or pull requests:
-- Related repositories or external contracts:
+- Related repositories, APIs, schemas, generated artifacts, migrations, infrastructure, deployments, or external contracts:
 
-## Risk, security, migration, and rollback
+## Architecture, compatibility, and risk
 
-- User or operational impact:
-- Security/privacy impact and secret-handling review:
-- Migration or compatibility considerations:
-- Rollback or recovery approach:
+- Architecture and behavior:
+- Compatibility or migration considerations:
+- Security, privacy, and secret-handling impact:
+- Operational risk, monitoring, and reversible roll-forward plan:
 
 ## Validation
 
-List exact commands, environments, and results. Include unit, integration, contract, build, and end-to-end evidence as applicable.
+List the exact commands, environments, and results for applicable formatters, linters, tests, builds, contract checks, security checks, and end-to-end checks.
 
 ## Conflict-resolution record
 
-- [ ] Remote state was fetched before editing and before pushing.
-- [ ] Concurrent work was preserved; no destructive operation or history rewrite was used.
-- [ ] Conflicts, if any, were resolved semantically using the merge base, both sides, 3–10 relevant commits, tests, contracts, linked work, and related repositories.
+- [ ] Remote state was fetched before editing and again before pushing.
+- [ ] Concurrent and uncommitted work was preserved; no destructive operation or history rewrite was used or recommended.
+- [ ] Conflicts, if any, were resolved semantically using the merge base, both complete sides, 3–10 relevant prior commits when useful, tests, contracts, Linear context, and related repositories.
+- [ ] No side was accepted wholesale in place of conceptual review.
 - [ ] The complete worktree was scanned for unresolved conflict markers.
-- [ ] No `ours`/`theirs` side was accepted wholesale without conceptual review.
 
 ## Final checklist
 
-- [ ] Focused commits and reviewable diff
-- [ ] Documentation and generated artifacts updated from authoritative sources
-- [ ] External Actions pinned to full commit SHAs
-- [ ] Explicit least-privilege workflow permissions and timeouts
-- [ ] No credentials, private data, or sensitive logs included
-- [ ] Authoritative remote branch/PR/check evidence verified
-<!-- ore-org-baseline:end -->
+- [ ] Documentation, bindings, fixtures, and generated artifacts reflect the final contract.
+- [ ] External GitHub Actions are pinned and workflows use least privilege, explicit timeouts, and non-persistent checkout credentials.
+- [ ] No secrets, personal data, private registry details, production data, or sensitive logs are included.
+- [ ] The exact proposed head was verified and the evidence above is truthful.
