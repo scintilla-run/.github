@@ -19,6 +19,8 @@ Describe the problem, intended behavior, user or operational outcome, and why th
 
 List the exact commands, environments, and results for applicable formatters, linters, tests, builds, contract checks, security checks, and end-to-end checks.
 
+- [ ] Relevant formatters, linters, tests, builds, contract checks, security checks, and end-to-end checks passed.
+
 ## Conflict-resolution record
 
 - [ ] Remote state was fetched before editing and again before pushing.
