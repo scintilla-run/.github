@@ -40,9 +40,11 @@ ORESoftware/typespec-json-schema-validator
 ## Current evidence
 
 [`scintilla-run/scintilla-lambda-pub-core#4`](https://github.com/scintilla-run/scintilla-lambda-pub-core/pull/4)
-adds immutable TJSV admission, an explicit closed declaration mapping, an
-intentional negative control, retained JSON/SARIF/Contract-IR evidence, and a
-seven-language native matrix.
+merged through normal history as
+`ab54c9a394f048ffbd9f10b2362c7b595c148b19` from verified source head
+`afc59d3224d7ed17cfdf3ea89fa3dccdb2c15a44`. Actions run `34389876636`
+passed immutable TJSV admission, the intentional negative control, retained
+JSON/SARIF/Contract-IR evidence, and all seven native language lanes.
 
 The first hosted run proved the repository-local verifier still passes and
 exposed 66 declaration-identity findings. The reviewed mapping reduced those to
@@ -108,7 +110,7 @@ The exception wave is blocked pending explicit intent:
 
 | GitHub task | Linear | State |
 | --- | --- | --- |
-| [Admit scintilla-lambda-pub-core with immutable TJSV and negative controls](https://github.com/scintilla-run/.github/issues/21) | `DEN-3959` | in-progress |
+| [Admit scintilla-lambda-pub-core with immutable TJSV and negative controls](https://github.com/scintilla-run/.github/issues/21) | `DEN-3959` | complete |
 | [Define lambda shared-code ownership and one-way dependency boundaries](https://github.com/scintilla-run/.github/issues/22) | `DEN-3959` | open |
 | [Add exact lambda contract lock, consumer verifier, and release provenance](https://github.com/scintilla-run/.github/issues/23) | `DEN-3959` | open |
 | [Certify a paired test-org lambda consumer before production rollout](https://github.com/scintilla-run/.github/issues/24) | `DEN-3959` | open |
