@@ -25,6 +25,30 @@
     "not-yet-verified",
     "intentional-empty"
   ],
+  "foundationEvidence": {
+    "publicCore": {
+      "checks": [
+        "repository-local deterministic peer comparison",
+        "immutable TJSV positive admission",
+        "zero-finding receipt and admissible Contract IR",
+        "intentional runtime-enum drift rejection",
+        "non-admissible negative-control Contract IR tombstone",
+        "TypeScript",
+        "Bun",
+        "Deno",
+        "Rust",
+        "Go",
+        "Erlang",
+        "Gleam"
+      ],
+      "mergeCommit": "ab54c9a394f048ffbd9f10b2362c7b595c148b19",
+      "pullRequest": "https://github.com/scintilla-run/scintilla-lambda-pub-core/pull/4",
+      "repository": "scintilla-run/scintilla-lambda-pub-core",
+      "result": "passed",
+      "sourceHead": "afc59d3224d7ed17cfdf3ea89fa3dccdb2c15a44",
+      "workflowRun": 34389876636
+    }
+  },
   "generatedFrom": {
     "complete": false,
     "date": "2026-09-09",
@@ -59,7 +83,7 @@
   ],
   "repositories": [
     {
-      "discoveryState": "active",
+      "discoveryState": "merged-and-verified",
       "repository": "scintilla-run/scintilla-lambda-pub-core",
       "role": "public-contract-core",
       "wave": "foundation"
@@ -300,7 +324,7 @@
     {
       "id": "DEN-3959",
       "issue": "https://github.com/scintilla-run/.github/issues/21",
-      "state": "in-progress",
+      "state": "complete",
       "title": "Admit scintilla-lambda-pub-core with immutable TJSV and negative controls"
     },
     {
