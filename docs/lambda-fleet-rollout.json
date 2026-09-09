@@ -1,0 +1,445 @@
+{
+  "authorityBoundary": {
+    "contractIr": "admission and projection evidence only",
+    "generatedJsonSchema": "comparison evidence only",
+    "jsonSchema": "independently-authored Draft 2020-12 peer",
+    "precedence": "none",
+    "typespec": "independently-authored peer",
+    "validator": {
+      "repository": "ORESoftware/typespec-json-schema-validator",
+      "revision": "4740f1367a7906813dcd420a77d0c9ede26943fb"
+    }
+  },
+  "dependencyDirection": [
+    "independent TypeSpec and JSON Schema peers",
+    "scintilla-run/scintilla-lambda-pub-core",
+    "product or shared-service *-lambdas adapter",
+    "sibling *-lib-core named operations",
+    "sibling private *-orm-core persistence seams"
+  ],
+  "evidenceStates": [
+    "live-observed",
+    "source-observed",
+    "planned",
+    "blocked",
+    "not-yet-verified",
+    "intentional-empty"
+  ],
+  "generatedFrom": {
+    "complete": false,
+    "date": "2026-09-09",
+    "method": "connected GitHub repository discovery and direct repository inspection",
+    "note": "This is a controlled discovery baseline, not a claim that inaccessible or newly created repositories do not exist.",
+    "scope": "accessible repositories matching *-lambdas plus the canonical template and Scintilla public core"
+  },
+  "knownBlockers": [
+    {
+      "id": "DEN-1537",
+      "safety": "No personal access token or deploy-key fallback is permitted.",
+      "summary": "The trusted k8s-cluster GitHub OIDC identity is not authorized by either configured AWS role, so repository-restricted GitHub App secret hydration remains blocked."
+    },
+    {
+      "id": "DEN-3959",
+      "safety": "Do not duplicate public wire contracts into product repositories.",
+      "summary": "No product consumer reference to scintilla-lambda-pub-core was found in the accessible search baseline; dependency adoption and proof are still required."
+    },
+    {
+      "id": "DEN-3043",
+      "safety": "Record intentional state or resolve ownership before rollout.",
+      "summary": "Three discovered Lambda repositories are empty and the two HypeSiege Lambda repositories have an undocumented ownership distinction."
+    }
+  ],
+  "promotionGates": [
+    "public core produces a current-head zero-finding TJSV receipt and admissible Contract IR",
+    "intentional peer-authority mutation is rejected and retained as non-admissible evidence",
+    "one paired test-organization consumer passes contract, runtime, entrypoint, and amd64/arm64 artifact proof",
+    "pilot production consumers pass on the exact same public-core release",
+    "remaining waves advance only by reviewed immutable locks and evidence-bound pull requests",
+    "zero-step, unassigned-run, missing-credential, and infrastructure-only outcomes are never treated as green"
+  ],
+  "repositories": [
+    {
+      "discoveryState": "active",
+      "repository": "scintilla-run/scintilla-lambda-pub-core",
+      "role": "public-contract-core",
+      "wave": "foundation"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "ORESoftware/ores-lambdas-template",
+      "role": "canonical-template",
+      "wave": "foundation"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "scintilla-run/scintilla-lambdas",
+      "role": "scintilla-runtime",
+      "wave": "foundation"
+    },
+    {
+      "discoveryState": "active",
+      "pairedRepository": "honeypot-r-us/hnpt-lambdas",
+      "repository": "honeypot-r-us-test/hnpt-lambdas",
+      "role": "test-canary",
+      "wave": "canary"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "athlet-o/athleto-lambdas",
+      "role": "product",
+      "wave": "pilot"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "messaging-intel/msgint-lambdas",
+      "role": "product",
+      "wave": "pilot"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "fiducia-cloud/fiducia-lambdas",
+      "role": "product",
+      "wave": "pilot"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "zed-pkg/zed-lambdas",
+      "role": "product",
+      "wave": "pilot"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "shared-auth/shared-auth-lambdas",
+      "role": "product",
+      "wave": "pilot"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "canonical-cloud/canonical-lambdas",
+      "role": "product",
+      "wave": "wave-2"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "cliptown/cliptown-lambdas",
+      "role": "product",
+      "wave": "wave-2"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "quaestor-ledger/quaestor-lambdas",
+      "role": "product",
+      "wave": "wave-2"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "opto-sync/opto-sync-lambdas",
+      "role": "product",
+      "wave": "wave-2"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "sonus-auris/sonus-auris-lambdas",
+      "role": "product",
+      "wave": "wave-2"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "daedalus-fab/daedalus-lambdas",
+      "role": "product",
+      "wave": "wave-2"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "claritas-viz/claritas-lambdas",
+      "role": "product",
+      "wave": "wave-2"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "benefactor-cc/benefactor-lambdas",
+      "role": "product",
+      "wave": "wave-2"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "3FA-app/3fa-lambdas",
+      "role": "product",
+      "wave": "wave-2"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "StreemPilot/streempilot-lambdas",
+      "role": "product",
+      "wave": "wave-3"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "file-tunnel/ftnl-lambdas",
+      "role": "product",
+      "wave": "wave-3"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "agent-pontifex/agent-pontifex-lambdas",
+      "role": "product",
+      "wave": "wave-3"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "embedded-alerts/eal-lambdas",
+      "role": "product",
+      "wave": "wave-3"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "hacker-house-medellin/hhm-lambdas",
+      "role": "product",
+      "wave": "wave-3"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "elenkos-systems/elenkos-lambdas",
+      "role": "product",
+      "wave": "wave-3"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "happy-wakey/happy-wakey-lambdas",
+      "role": "product",
+      "wave": "wave-3"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "chapter-publishing/chptr-lambdas",
+      "role": "product",
+      "wave": "wave-3"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "premarital-asset-protection/pmap-lambdas",
+      "role": "product",
+      "wave": "wave-3"
+    },
+    {
+      "discoveryState": "active",
+      "pairedRepository": "honeypot-r-us-test/hnpt-lambdas",
+      "repository": "honeypot-r-us/hnpt-lambdas",
+      "role": "product",
+      "wave": "wave-3"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "ClaimGraph/claimgraph-lambdas",
+      "role": "product",
+      "wave": "wave-3"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "ores-chat/ores-chat-lambdas",
+      "role": "product",
+      "wave": "wave-3"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "hhaus-org/hhaus-lambdas",
+      "role": "product",
+      "wave": "wave-3"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "praxonne/praxonne-lambdas",
+      "role": "product",
+      "wave": "wave-3"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "ores-legal/ores-legal-lambdas",
+      "role": "product",
+      "wave": "wave-3"
+    },
+    {
+      "discoveryState": "active",
+      "repository": "ores-rate-limit/ores-rl-lambdas",
+      "role": "shared-service",
+      "wave": "wave-3"
+    },
+    {
+      "discoveryState": "intentional-state-required",
+      "repository": "ores-otel/ores-otel-lambdas",
+      "role": "shared-service",
+      "wave": "exception"
+    },
+    {
+      "discoveryState": "intentional-state-required",
+      "repository": "ores-redis-lru-cache/ores-lru-redis-lambdas",
+      "role": "shared-service",
+      "wave": "exception"
+    },
+    {
+      "discoveryState": "intentional-state-required",
+      "repository": "pal-trace/pal-trace-lambdas",
+      "role": "product",
+      "wave": "exception"
+    },
+    {
+      "discoveryState": "ownership-review-required",
+      "repository": "hypesiege/hsg-lambdas",
+      "role": "product",
+      "wave": "exception"
+    },
+    {
+      "discoveryState": "ownership-review-required",
+      "repository": "hypesiege/hypesiege-lambdas",
+      "role": "product",
+      "wave": "exception"
+    }
+  ],
+  "schema": "scintilla.run/lambda-fleet-rollout/v1",
+  "tasks": [
+    {
+      "id": "DEN-3959",
+      "issue": "https://github.com/scintilla-run/.github/issues/21",
+      "state": "in-progress",
+      "title": "Admit scintilla-lambda-pub-core with immutable TJSV and negative controls"
+    },
+    {
+      "id": "DEN-3959",
+      "issue": "https://github.com/scintilla-run/.github/issues/22",
+      "state": "open",
+      "title": "Define lambda shared-code ownership and one-way dependency boundaries"
+    },
+    {
+      "id": "DEN-3959",
+      "issue": "https://github.com/scintilla-run/.github/issues/23",
+      "state": "open",
+      "title": "Add exact lambda contract lock, consumer verifier, and release provenance"
+    },
+    {
+      "id": "DEN-3959",
+      "issue": "https://github.com/scintilla-run/.github/issues/24",
+      "state": "open",
+      "title": "Certify a paired test-org lambda consumer before production rollout"
+    },
+    {
+      "id": "DEN-3959",
+      "issue": "https://github.com/scintilla-run/.github/issues/25",
+      "state": "open",
+      "title": "Reconcile ores-lambdas-template with the shared public core"
+    },
+    {
+      "id": "DEN-3959",
+      "issue": "https://github.com/scintilla-run/.github/issues/26",
+      "state": "open",
+      "title": "Make scintilla-lambdas consume public contracts without becoming a second authority"
+    },
+    {
+      "id": "DEN-3959",
+      "issue": "https://github.com/scintilla-run/.github/issues/27",
+      "state": "open",
+      "title": "Extract reusable argv-safe entrypoint and lifecycle conformance"
+    },
+    {
+      "id": "DEN-1569",
+      "issue": "https://github.com/scintilla-run/.github/issues/28",
+      "state": "open",
+      "title": "Add bounded stdio-json streaming, cancellation, and backpressure conformance"
+    },
+    {
+      "id": "DEN-1095",
+      "issue": "https://github.com/scintilla-run/.github/issues/29",
+      "state": "open",
+      "title": "Publish one provider-adapter conformance matrix for every *-lambdas repo"
+    },
+    {
+      "id": "DEN-1095",
+      "issue": "https://github.com/scintilla-run/.github/issues/30",
+      "state": "open",
+      "title": "Standardize reproducible multi-architecture Lambda and OCI release evidence"
+    },
+    {
+      "id": "DEN-3043",
+      "issue": "https://github.com/scintilla-run/.github/issues/31",
+      "state": "open",
+      "title": "Inventory every *-lambdas repository and ratchet new shared-code debt"
+    },
+    {
+      "id": "DEN-3043",
+      "issue": "https://github.com/scintilla-run/.github/issues/32",
+      "state": "open",
+      "title": "Enforce product lib-core and orm-core boundaries in every *-lambdas repo"
+    }
+  ],
+  "waves": [
+    {
+      "name": "foundation",
+      "repositories": [
+        "scintilla-run/scintilla-lambda-pub-core",
+        "ORESoftware/ores-lambdas-template",
+        "scintilla-run/scintilla-lambdas"
+      ]
+    },
+    {
+      "name": "canary",
+      "note": "Select and record the exact scintilla-run-test conformance repository before execution.",
+      "repositories": [
+        "honeypot-r-us-test/hnpt-lambdas"
+      ]
+    },
+    {
+      "name": "pilot",
+      "repositories": [
+        "athlet-o/athleto-lambdas",
+        "messaging-intel/msgint-lambdas",
+        "fiducia-cloud/fiducia-lambdas",
+        "zed-pkg/zed-lambdas",
+        "shared-auth/shared-auth-lambdas"
+      ]
+    },
+    {
+      "name": "wave-2",
+      "repositories": [
+        "canonical-cloud/canonical-lambdas",
+        "cliptown/cliptown-lambdas",
+        "quaestor-ledger/quaestor-lambdas",
+        "opto-sync/opto-sync-lambdas",
+        "sonus-auris/sonus-auris-lambdas",
+        "daedalus-fab/daedalus-lambdas",
+        "claritas-viz/claritas-lambdas",
+        "benefactor-cc/benefactor-lambdas",
+        "3FA-app/3fa-lambdas"
+      ]
+    },
+    {
+      "name": "wave-3",
+      "repositories": [
+        "StreemPilot/streempilot-lambdas",
+        "file-tunnel/ftnl-lambdas",
+        "agent-pontifex/agent-pontifex-lambdas",
+        "embedded-alerts/eal-lambdas",
+        "hacker-house-medellin/hhm-lambdas",
+        "elenkos-systems/elenkos-lambdas",
+        "happy-wakey/happy-wakey-lambdas",
+        "chapter-publishing/chptr-lambdas",
+        "premarital-asset-protection/pmap-lambdas",
+        "honeypot-r-us/hnpt-lambdas",
+        "ClaimGraph/claimgraph-lambdas",
+        "ores-chat/ores-chat-lambdas",
+        "hhaus-org/hhaus-lambdas",
+        "praxonne/praxonne-lambdas",
+        "ores-legal/ores-legal-lambdas",
+        "ores-rate-limit/ores-rl-lambdas"
+      ]
+    },
+    {
+      "name": "exception",
+      "repositories": [
+        "ores-otel/ores-otel-lambdas",
+        "ores-redis-lru-cache/ores-lru-redis-lambdas",
+        "pal-trace/pal-trace-lambdas",
+        "hypesiege/hsg-lambdas",
+        "hypesiege/hypesiege-lambdas"
+      ]
+    }
+  ]
+}
