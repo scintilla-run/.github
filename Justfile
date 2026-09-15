@@ -17,5 +17,5 @@ codespace-edge-down:
 codespace-edge-check:
     @command -v cloudflared >/dev/null 2>&1 || { echo >&2 "cloudflared is required"; exit 127; }
     @command -v oresc >/dev/null 2>&1 || { echo >&2 "oresc is required; rebuild the Codespace to provision it"; exit 127; }
-    @oresc --no-json codespace edge status >/dev/null || test $$? -eq 2
+    @oresc --no-json codespace edge status >/dev/null || test $? -eq 2
     @echo "Codespace edge tooling is ready"
