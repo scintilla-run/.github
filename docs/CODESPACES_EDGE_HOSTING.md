@@ -11,46 +11,45 @@ Current pilot Codespace:
 - current repository: `scintilla-run/.github`
 - Codespace: `bookish-goldfish-v6v7w4vx545hxp95`
 - canonical local ingress port: `8080`
-- canonical long-term infra owner: `scintilla-run/scintilla-infra`
+- canonical long-term application infra owner: `scintilla-run/scintilla-infra`
 
 ## Request path
 
 ```text
 browser
   -> Cloudflare DNS / TLS / optional Access
-  -> remotely managed named Cloudflare Tunnel
+  -> Workers VPC / named Cloudflare Tunnel
   -> cloudflared inside the Codespace
   -> http://127.0.0.1:8080
-  -> repository-owned local application origin
+  -> codespaces-cluster Rust edge proxy
+  -> path-selected local service
 ```
 
 The GitHub forwarded port remains private. Cloudflare must not use the `*.app.github.dev` forwarded-port URL as the origin. Port 8080 is marked `onAutoForward: ignore`.
 
 ## Ownership boundary
 
-Current `oresc` revision `c854130ee147e9793a3af8736e90241630a5c934` uses the external-origin connector model:
+The implementation deliberately separates local service orchestration from tunnel supervision:
 
-- the repository/local orchestrator owns the application origin;
-- the origin must already answer `GET /readyz` on `127.0.0.1:8080`;
-- `oresc codespace edge up` then starts only the detached `cloudflared` connector;
-- `oresc codespace edge down` stops only the connector and leaves the origin untouched.
+- `ORESoftware/codespaces-cluster` owns the shared local Codespace cluster and Rust path proxy on `127.0.0.1:8080`;
+- `ORESoftware/ores-compose` owns dependency-wave startup/readiness and graceful child shutdown;
+- `oresc codespace edge` owns only the detached `cloudflared` connector;
+- `oresc` requires the external origin's `/readyz` to be healthy before starting the connector.
 
-Do not add a synthetic status server merely to satisfy the tunnel. The canonical `scintilla-infra` rollout uses the existing `scintilla-backend.rs` origin on 8080 and `gleam-lambda-runner` dependency on 8083 through `ores-compose`.
+The repository-level `just codespace-edge-up/status/down` recipes delegate to the shared `codespaces-cluster` lifecycle. `up` starts the local cluster first and then the connector; `down` stops the connector first and then the local cluster. The long-term Scintilla application graph can move into `scintilla-run/scintilla-infra` without changing this outer edge contract.
 
 ## Codespace provisioning
 
-The current `.github` Codespace devcontainer provisions Rust, `just`, `cloudflared`, and GitHub CLI, and installs the exact private `ORESoftware/ores-cli` revision above. Because the CLI repository is private and cross-owner, configure:
+The current `.github` Codespace devcontainer provisions Rust, `just`, `cloudflared`, and GitHub CLI, and installs reviewed private `ORESoftware/ores-cli` revision `c854130ee147e9793a3af8736e90241630a5c934`. That revision contains the connector-only `oresc` behavior required by the shared lifecycle.
+
+Because the CLI repository is private and cross-owner, configure:
 
 - `ORES_CLI_READ_TOKEN` — fine-grained read-only Contents access to `ORESoftware/ores-cli`;
 - `TUNNEL_TOKEN` — connector token for the pre-provisioned named Cloudflare tunnel.
 
 Tokens are supplied through environment-based credential handling and must not be embedded in Git URLs, argv, source, state, logs, or reports. Rebuild the Codespace after devcontainer changes.
 
-The current `.github` repository remains useful as an org-control pilot, but application-origin orchestration belongs in `scintilla-run/scintilla-infra`; new long-lived Codespaces should converge there rather than duplicating the `ores-compose` graph here.
-
 ## Lifecycle commands
-
-This repository exposes connector wrappers:
 
 ```text
 just codespace-edge-check
@@ -59,17 +58,15 @@ just codespace-edge-status
 just codespace-edge-down
 ```
 
-`codespace-edge-check` is read-only. `codespace-edge-up` fails closed until a real local origin is ready on 8080. For the canonical Scintilla flow, start the `scintilla-infra` `ores-compose` origin first, then start the connector.
+`codespace-edge-up` clones or fast-forwards the shared `ORESoftware/codespaces-cluster` checkout, runs its local `ores-compose`/Rust origin lifecycle, waits for `127.0.0.1:8080/readyz`, and then launches the connector. `status` and `down` intentionally do not fetch or change that shared checkout, so they inspect/stop the exact implementation that owns the running local supervisor.
 
 ## Tunnel contract
 
-Use one remotely managed named tunnel per Codespace origin. Quick Tunnels are not the target architecture. Stable service identity belongs to Cloudflare DNS. Protect administrative/diagnostic routes with Cloudflare Access and apply WAF/rate limiting where appropriate.
+Use one remotely managed named tunnel per Codespace origin. Quick Tunnels are not the target architecture. Stable service identity belongs to Cloudflare DNS. Workers VPC requires `cloudflared` 2025.7.0 or newer and QUIC-capable outbound connectivity; the reviewed `oresc` connector enforces that minimum and uses QUIC. Protect administrative/diagnostic routes with Cloudflare Access and apply WAF/rate limiting where appropriate.
 
 ## GitHub Project contract
 
 Track the fleet in a Project named `Codespaces Edge Hosting` with fields: Status, Origin org, Origin repo, Codespace name, Public hostname, Tunnel health, Codespace state, Last verified, and Risk. Recommended views are `By org`, `Tunnel health`, `Blocked`, and `Recently verified`.
-
-The current connector does not expose GitHub Project mutation APIs, so this document defines the contract without claiming that Project has been created.
 
 ## Exit path
 
