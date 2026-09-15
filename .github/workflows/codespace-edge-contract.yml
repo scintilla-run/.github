@@ -37,7 +37,7 @@ jobs:
           set -euo pipefail
           cfg=.devcontainer/devcontainer.json
           test -s "$cfg"
-          grep -Fq -- '--rev 3d65e4dbdeeed04bfa7d8f8d64a5681b41157a90' "$cfg"
+          grep -Fq -- '--rev c854130ee147e9793a3af8736e90241630a5c934' "$cfg"
           grep -Fq 'ORES_CLI_READ_TOKEN' "$cfg"
           grep -Fq 'TUNNEL_TOKEN' "$cfg"
           grep -Fq 'CARGO_NET_GIT_FETCH_WITH_CLI=true' "$cfg"
