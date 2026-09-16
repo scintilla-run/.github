@@ -40,7 +40,9 @@ The repository-level `just codespace-edge-up/status/down` recipes delegate to th
 
 ## Codespace provisioning
 
-The current `.github` Codespace devcontainer provisions Rust, `just`, `cloudflared`, GitHub CLI, pinned `ORESoftware/ores-compose@9fbbaf4580b91c1445ec91f67ad3b31252094171`, and reviewed private `ORESoftware/ores-cli@d37aa4c1a0b79a292a31e2f16db8622144b0831f`.
+The current `.github` Codespace devcontainer provisions Rust, `just`, `cloudflared`, GitHub CLI, reviewed `ORESoftware/ores-compose@8a01df4227a44b0b25741b7ef4a910ec4a4dc75f`, and reviewed private `ORESoftware/ores-cli@d37aa4c1a0b79a292a31e2f16db8622144b0831f`.
+
+`config/ores-cli.rev` and `config/ores-compose.rev` are the review authorities for those fallback bootstrap binaries. Each contains exactly one full 40-hex commit SHA; the devcontainer reads and validates those files rather than carrying an independent tool-version literal. `config/codespaces-cluster.rev` independently pins the shared lifecycle implementation.
 
 Because the ORE tooling repositories are private and cross-owner, configure:
 
@@ -50,6 +52,8 @@ Because the ORE tooling repositories are private and cross-owner, configure:
 The devcontainer performs a read-only `gh repo view ORESoftware/codespaces-cluster` preflight so insufficient token scope fails during rebuild. Tokens are supplied through environment-based credential handling and must not be embedded in Git URLs, argv, source, state, logs, or reports. Rebuild the Codespace after devcontainer changes.
 
 The pinned `oresc` revision removes `ORES_CLI_READ_TOKEN`, `GH_TOKEN`, `GITHUB_TOKEN`, `TUNNEL_TOKEN`, and `CF_TUNNEL_TOKEN` from its generic child command environments before the version preflight, detached supervisor, and connector spawn, then selectively re-adds only the canonical tunnel token and ownership marker where required. The shared controller revision likewise strips bootstrap/tunnel credentials before `ores-compose` preflight/spawn so they cannot reach the application process tree.
+
+The pinned `ores-compose` revision adds pre-network runtime/replica admission, exact source materialization, checkout-path lifetime locking, dependency-safe reverse shutdown waves, and partial-start cleanup. Scintilla therefore uses the same lifecycle-hardened compose authority as the GHA Indie Worker Codespace consumer rather than the earlier bootstrap revision.
 
 ## Lifecycle commands
 
@@ -62,7 +66,7 @@ just codespace-edge-down
 
 The org-control wrapper records the reviewed shared cluster revision in `config/codespaces-cluster.rev`. `up` clones only when needed, fetches only when the exact pinned object is absent, checks out that commit detached, proves `HEAD` equals the pin, and then delegates to the shared lifecycle. It never executes moving `main`. `status` and `down` intentionally do not fetch, switch branches, or mutate that shared checkout while it may own running processes.
 
-The currently reviewed shared revision is `ORESoftware/codespaces-cluster@8c494f4b038a766be06ff29df5a067b6d78c9134`. In addition to controller-side secret stripping, it bootstraps fallback `oresc` from the same reviewed `d37aa4c1...` revision, pins its own GitHub Actions dependencies to immutable commit SHAs, and disables checkout credential persistence.
+The currently reviewed shared revision is `ORESoftware/codespaces-cluster@367a68adf04bf853ff2923c234808cdc538ee21a`. In addition to controller-side secret stripping, it carries its own reviewed `config/ores-cli.rev` / `config/ores-compose.rev` bootstrap authorities, pins GitHub Actions dependencies to immutable commit SHAs, and disables checkout credential persistence.
 
 ## Tunnel contract
 
