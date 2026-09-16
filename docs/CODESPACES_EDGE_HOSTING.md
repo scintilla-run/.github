@@ -36,18 +36,20 @@ The implementation deliberately separates local service orchestration from tunne
 - `oresc codespace edge` owns only the detached `cloudflared` connector;
 - `oresc` requires the external origin's `/readyz` to be healthy before starting the connector.
 
-The repository-level `just codespace-edge-up/status/down` recipes delegate to the shared `codespaces-cluster` lifecycle. `up` starts the local cluster first and then the connector; `down` stops the connector first and then the local cluster. The long-term Scintilla application graph can move into `scintilla-run/scintilla-infra` without changing this outer edge contract.
+The repository-level `just codespace-edge-up/status/down` recipes delegate to the shared `codespaces-cluster` lifecycle. `up` starts the local cluster first and then the connector; `down` stops the connector first and then the local cluster. The long-term Scintilla application graph belongs in `scintilla-run/scintilla-infra` without changing this outer edge contract.
 
 ## Codespace provisioning
 
-The current `.github` Codespace devcontainer provisions Rust, `just`, `cloudflared`, and GitHub CLI, and installs reviewed private `ORESoftware/ores-cli` revision `c854130ee147e9793a3af8736e90241630a5c934`. That revision contains the connector-only `oresc` behavior required by the shared lifecycle.
+The current `.github` Codespace devcontainer provisions Rust, `just`, `cloudflared`, GitHub CLI, pinned `ORESoftware/ores-compose@9fbbaf4580b91c1445ec91f67ad3b31252094171`, and reviewed private `ORESoftware/ores-cli@d37aa4c1a0b79a292a31e2f16db8622144b0831f`.
 
-Because the CLI repository is private and cross-owner, configure:
+Because the ORE tooling repositories are private and cross-owner, configure:
 
-- `ORES_CLI_READ_TOKEN` — fine-grained read-only Contents access to `ORESoftware/ores-cli`;
+- `ORES_CLI_READ_TOKEN` — fine-grained read-only Contents access limited to `ORESoftware/ores-cli`, `ORESoftware/ores-compose`, and `ORESoftware/codespaces-cluster`, used only for bootstrap/network operations;
 - `TUNNEL_TOKEN` — connector token for the pre-provisioned named Cloudflare tunnel.
 
-Tokens are supplied through environment-based credential handling and must not be embedded in Git URLs, argv, source, state, logs, or reports. Rebuild the Codespace after devcontainer changes.
+The devcontainer performs a read-only `gh repo view ORESoftware/codespaces-cluster` preflight so insufficient token scope fails during rebuild. Tokens are supplied through environment-based credential handling and must not be embedded in Git URLs, argv, source, state, logs, or reports. Rebuild the Codespace after devcontainer changes.
+
+The pinned `oresc` revision removes `ORES_CLI_READ_TOKEN`, `GH_TOKEN`, `GITHUB_TOKEN`, `TUNNEL_TOKEN`, and `CF_TUNNEL_TOKEN` from its generic child command environments before the version preflight, detached supervisor, and connector spawn, then selectively re-adds only the canonical tunnel token and ownership marker where required. The shared controller revision likewise strips bootstrap/tunnel credentials before `ores-compose` preflight/spawn so they cannot reach the application process tree.
 
 ## Lifecycle commands
 
@@ -58,7 +60,9 @@ just codespace-edge-status
 just codespace-edge-down
 ```
 
-`codespace-edge-up` clones or fast-forwards the shared `ORESoftware/codespaces-cluster` checkout, runs its local `ores-compose`/Rust origin lifecycle, waits for `127.0.0.1:8080/readyz`, and then launches the connector. `status` and `down` intentionally do not fetch or change that shared checkout, so they inspect/stop the exact implementation that owns the running local supervisor.
+The org-control wrapper records the reviewed shared cluster revision in `config/codespaces-cluster.rev`. `up` clones only when needed, fetches only when the exact pinned object is absent, checks out that commit detached, proves `HEAD` equals the pin, and then delegates to the shared lifecycle. It never executes moving `main`. `status` and `down` intentionally do not fetch, switch branches, or mutate that shared checkout while it may own running processes.
+
+The currently reviewed shared revision is `ORESoftware/codespaces-cluster@9d1e9709fa2ba0fccdf920731cdfa5673a77e5f6`.
 
 ## Tunnel contract
 
