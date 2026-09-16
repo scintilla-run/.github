@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - '.devcontainer/**'
+      - 'config/codespaces-cluster.rev'
       - 'Justfile'
       - '.github/workflows/codespace-edge-contract.yml'
       - 'docs/CODESPACES_EDGE_HOSTING.md'
@@ -11,6 +12,7 @@ on:
     branches: [main]
     paths:
       - '.devcontainer/**'
+      - 'config/codespaces-cluster.rev'
       - 'Justfile'
       - '.github/workflows/codespace-edge-contract.yml'
       - 'docs/CODESPACES_EDGE_HOSTING.md'
@@ -37,16 +39,36 @@ jobs:
           set -euo pipefail
           cfg=.devcontainer/devcontainer.json
           test -s "$cfg"
-          grep -Fq -- '--rev c854130ee147e9793a3af8736e90241630a5c934' "$cfg"
+          grep -Fq -- '--rev d37aa4c1a0b79a292a31e2f16db8622144b0831f' "$cfg"
+          ! grep -Fq -- '--rev c854130ee147e9793a3af8736e90241630a5c934' "$cfg"
+          grep -Fq -- '--rev 9fbbaf4580b91c1445ec91f67ad3b31252094171' "$cfg"
           grep -Fq 'ORES_CLI_READ_TOKEN' "$cfg"
           grep -Fq 'TUNNEL_TOKEN' "$cfg"
+          grep -Fq 'ORESoftware/ores-cli' "$cfg"
+          grep -Fq 'ORESoftware/ores-compose' "$cfg"
+          grep -Fq 'ORESoftware/codespaces-cluster' "$cfg"
+          grep -Fq 'gh repo view ORESoftware/codespaces-cluster --json name' "$cfg"
           grep -Fq 'CARGO_NET_GIT_FETCH_WITH_CLI=true' "$cfg"
           grep -Fq 'just codespace-edge-check' "$cfg"
           grep -Fq '"8080"' "$cfg"
           grep -Fq '"onAutoForward": "ignore"' "$cfg"
+
+          rev="$(tr -d '[:space:]' < config/codespaces-cluster.rev)"
+          test "$rev" = '9d1e9709fa2ba0fccdf920731cdfa5673a77e5f6'
+          [[ "$rev" =~ ^[0-9a-f]{40}$ ]]
+
           grep -Fq 'codespace-edge-up:' Justfile
           grep -Fq 'codespace-edge-status:' Justfile
           grep -Fq 'codespace-edge-down:' Justfile
           grep -Fq 'codespace-edge-check:' Justfile
+          grep -Fq 'GH_TOKEN="$token" gh repo clone ORESoftware/codespaces-cluster' Justfile
+          grep -Fq 'GH_TOKEN="$token" git -C "$root" fetch --prune origin main' Justfile
+          grep -Fq 'checkout --detach -q "$rev"' Justfile
+          grep -Fq 'cat-file -e "$rev^{commit}"' Justfile
+          grep -Fq 'test "$(git -C "$root" rev-parse HEAD)" = "$rev"' Justfile
+          ! grep -Fq 'merge --ff-only origin/main' Justfile
+          ! grep -Fq 'checkout -q main' Justfile
+          ! grep -Fq 'export GH_TOKEN=' Justfile
+
           ! grep -Eq 'https://x-access-token:|ghp_|github_pat_|CF_TUNNEL_TOKEN|\.app\.github\.dev' "$cfg"
           ! git grep -nE '^(<<<<<<<|=======|>>>>>>>)' -- . ':!*.lock'
