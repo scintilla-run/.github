@@ -62,7 +62,7 @@ just codespace-edge-down
 
 The org-control wrapper records the reviewed shared cluster revision in `config/codespaces-cluster.rev`. `up` clones only when needed, fetches only when the exact pinned object is absent, checks out that commit detached, proves `HEAD` equals the pin, and then delegates to the shared lifecycle. It never executes moving `main`. `status` and `down` intentionally do not fetch, switch branches, or mutate that shared checkout while it may own running processes.
 
-The currently reviewed shared revision is `ORESoftware/codespaces-cluster@9d1e9709fa2ba0fccdf920731cdfa5673a77e5f6`.
+The currently reviewed shared revision is `ORESoftware/codespaces-cluster@8c494f4b038a766be06ff29df5a067b6d78c9134`. In addition to controller-side secret stripping, it bootstraps fallback `oresc` from the same reviewed `d37aa4c1...` revision, pins its own GitHub Actions dependencies to immutable commit SHAs, and disables checkout credential persistence.
 
 ## Tunnel contract
 
