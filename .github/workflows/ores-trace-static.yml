@@ -1,16 +1,46 @@
+# Static ORES trace-marker compatibility contract.
+# Compatibility/admission: ^ores-(trace|routine)-[A-Za-z0-9_-]{12,64}$
+# Canonical generator width: 21-character nanoid suffix.
 name: ORES static trace markers
-on: { pull_request: {}, workflow_call: {} }
-permissions: { contents: read }
+
+on:
+  pull_request:
+  workflow_call:
+
+permissions:
+  contents: read
+
 jobs:
   static-ids:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-        with: { persist-credentials: false }
-      - name: Enforce static ORES IDs
+      - name: Check out caller
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Check out canonical checker
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: ores-otel/ores.otel.log
+          ref: 4bc592884286f47372b4488b96d105bf40ef2d11
+          path: .ores-trace-contract-source
+          sparse-checkout: .github/ores-trace-contract.rs
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+
+      - name: Build canonical checker
+        shell: bash
+        run: rustc -O -o "$RUNNER_TEMP/ores-trace-contract" .ores-trace-contract-source/.github/ores-trace-contract.rs
+
+      - name: Self-test canonical checker
         shell: bash
         run: |
-          node <<'NODE'
-          const cp=require('node:child_process'),fs=require('node:fs');const F=cp.execFileSync('git',['ls-files','-z']).toString().split('\0').filter(Boolean).filter(p=>/\.(?:[cm]?[jt]s|tsx|jsx|rs|dart|go|java|kt|kts)$/.test(p)&&!/(?:^|\/)(?:generated|target|vendor|node_modules|build|dist)(?:\/|$)/.test(p));const T=/^ores-trace-[A-Za-z0-9_-]{21}$/,R=/^ores-routine-[A-Za-z0-9_-]{21}$/,E=[];for(const p of F){fs.readFileSync(p,'utf8').split(/\r?\n/).forEach((l,i)=>{if(/dd-trace-[A-Za-z0-9_-]+/.test(l))E.push(`${p}:${i+1}: legacy dd-trace`);for(const m of l.matchAll(/\b(?:addTraceId|addTrace|add_trace_id|add_trace)\s*\(\s*["']([^"']+)["']/g))if(!T.test(m[1]))E.push(`${p}:${i+1}: invalid static trace ID`);if(/\b(?:const|let|var|static)\b[^=\n]*=\s*["']ores-trace-/.test(l))E.push(`${p}:${i+1}: hoisted static trace ID`);for(const m of l.matchAll(/["'](ores-routine-[A-Za-z0-9_-]+)["']/g))if(!R.test(m[1]))E.push(`${p}:${i+1}: invalid routine ID`);});}if(E.length){console.error(E.join('\n'));process.exit(1)}console.log(`validated ${F.length} files`)
-          NODE
+          set -euo pipefail
+          rustc --test -o "$RUNNER_TEMP/ores-trace-contract-test" .ores-trace-contract-source/.github/ores-trace-contract.rs
+          "$RUNNER_TEMP/ores-trace-contract-test"
+
+      - name: Enforce static ORES IDs
+        shell: bash
+        run: "$RUNNER_TEMP/ores-trace-contract" .
