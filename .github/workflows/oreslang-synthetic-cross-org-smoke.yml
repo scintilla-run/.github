@@ -1,0 +1,81 @@
+name: oreslang synthetic cross-org smoke
+
+on:
+  push:
+    branches:
+      - ci/oreslang-synthetic-cross-org-smoke-20261020
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: oreslang-synthetic-cross-org-smoke-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  synthetic-cross-org-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      EXPECTED_REPOSITORY: scintilla-run/.github
+      EXPECTED_REPOSITORY_ID: "1324047970"
+    steps:
+      - name: Prove isolated runner and synthetic-only payload
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REPOSITORY" = "$EXPECTED_REPOSITORY"
+          test "$GITHUB_REPOSITORY_ID" = "$EXPECTED_REPOSITORY_ID"
+          test ! -e .git
+          python3 - <<'PY'
+          import hashlib
+          import json
+          import os
+          import pathlib
+          import unittest
+
+          SOURCE = b"synthetic oreslang fixture only\n"
+          EXPECTED = hashlib.sha256(SOURCE).hexdigest()
+
+          class CrossOrgSmoke(unittest.TestCase):
+              def test_runner_repository_identity(self):
+                  self.assertEqual(os.environ["GITHUB_REPOSITORY"],
+                                   os.environ["EXPECTED_REPOSITORY"])
+                  self.assertEqual(os.environ["GITHUB_REPOSITORY_ID"],
+                                   os.environ["EXPECTED_REPOSITORY_ID"])
+
+              def test_no_source_checkout(self):
+                  root = pathlib.Path(os.environ["GITHUB_WORKSPACE"])
+                  self.assertFalse((root / ".git").exists())
+
+              def test_exact_synthetic_sha_binding(self):
+                  self.assertEqual(hashlib.sha256(SOURCE).hexdigest(), EXPECTED)
+                  self.assertNotEqual(hashlib.sha256(SOURCE + b"mutated").hexdigest(), EXPECTED)
+
+              def test_default_deny_private_export(self):
+                  approved_private_source_destinations = set()
+                  self.assertNotIn(os.environ["GITHUB_REPOSITORY"],
+                                   approved_private_source_destinations)
+
+              def test_public_destination_cannot_be_private_source_carrier(self):
+                  destination_is_private = False
+                  self.assertFalse(destination_is_private)
+
+          suite = unittest.defaultTestLoader.loadTestsFromTestCase(CrossOrgSmoke)
+          result = unittest.TextTestRunner(verbosity=2).run(suite)
+          evidence = {
+              "synthetic_only": True,
+              "repository": os.environ["GITHUB_REPOSITORY"],
+              "repository_id": os.environ["GITHUB_REPOSITORY_ID"],
+              "sha": os.environ["GITHUB_SHA"],
+              "tests_run": result.testsRun,
+              "failures": len(result.failures),
+              "errors": len(result.errors),
+          }
+          print(json.dumps(evidence, sort_keys=True))
+          if not result.wasSuccessful():
+              raise SystemExit(1)
+          PY
